@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { getToken, removeToken, setToken } from './helper'
-import { store } from '../../index'
-import { fetchSession } from '../../../api'
+import { store } from '@/store'
+import { fetchSession } from '@/api'
 
 interface SessionResponse {
   id: boolean

@@ -236,7 +236,7 @@ export default {
           var obj = new WxLogin({
             self_redirect: true,
             id: "qr-code",
-            appid: "wx4cbe6adf2fe4454a",
+            appid: "xxxx",
             scope: "snsapi_login",
             redirect_uri: "https://jobcloud.myjiedian.com/talents-cloud-api/api/v1/wechat-app/admin-login-callback",
             state: "ceshi",

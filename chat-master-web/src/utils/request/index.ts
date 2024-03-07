@@ -1,7 +1,7 @@
 import type { AxiosProgressEvent, AxiosResponse, GenericAbortSignal } from 'axios'
 import request from './axios'
-import { useAuthStore } from '../../store'
-import { router } from '../../router'
+import { useAuthStore } from '@/store'
+import { router } from '@/router' 
 
 export interface HttpOption {
   url: string

@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
-import { useAuthStoreWithout } from '../store/modules/auth'
-import { useChatStore } from '../store'
+import { useAuthStoreWithout } from '@/store/modules/auth'
+import { useChatStore } from '@/store'
 
 export function setupPageGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
@@ -17,7 +17,7 @@ export function setupPageGuard(router: Router) {
       if (!res) {
         next({ name: 'Login' })
         return;
-      }
+      } 
       if (res.code !== 200) {
         next();
         return;

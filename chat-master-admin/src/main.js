@@ -15,7 +15,7 @@ import "./assets/styles/element-variables.scss";
 
 import "@/assets/styles/index.scss"; // global css
 import "@/assets/styles/common.scss"; // common css
-import App from "./App.vue";
+import App from "./App";
 import store from "./store";
 import router from "./router";
 import directive from "./directive"; // directive

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { AppState, Language, Theme } from './helper'
 import { getLocalSetting, setLocalSetting } from './helper'
-import { store } from '../../index'
+import { store } from '@/store'
 
 export const useAppStore = defineStore('app-store', {
   state: (): AppState => getLocalSetting(),

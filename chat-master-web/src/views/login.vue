@@ -154,8 +154,9 @@ async function handleVerify(e: MouseEvent) {
         </div>
         <div class="w-full h-full  flex mt-[100px]">
           <div class="w-[800px] ml-[350px]">
-            <div class="flex items-center"><img :src="logoLeft" /> <span class="text-[50px] font-medium">{{ $t('common.siteTitle') }}</span></div>
-            <div class="text-[70px] font-bold ml-[30px]">{{ $t('login.title') }}</div>
+            <!-- <div class="flex items-center"><span class="text-[50px] font-medium">{{ $t('common.siteTitle') }}</span></div> -->
+            <div class="text-[70px] font-bold ml-[30px]">{{ '一键切换' }}</div>
+            <div class="text-[70px] font-bold ml-[30px]">{{ $t('login.title') }}</div> 
             <div class="text-[20px] font-light ml-[30px]">{{ $t('login.subTitle') }}</div>
             <div
               class="w-[196px] h-[60px] mt-[80px] ml-[30px] bg-[#2454ff] text-white text-[22px] flex items-center justify-center rounded-lg cursor-pointer  hover:bg-blue-700"
@@ -167,7 +168,7 @@ async function handleVerify(e: MouseEvent) {
               <NForm ref="formRef" :model="loginValue" :rules="rules">
                 <div class="flex justify-center items-center mb-[18px] h-[65px]">
                   <img :src="logoLeft" class="w-[80px] h-[80px]"/>
-                  <span class="text-[50px] font-medium">{{ $t('common.siteTitle') }}</span>
+                  <span class="text-[40px] font-medium">{{ $t('common.siteTitle') }}</span>
                 </div>
                 <div>
                   <NFormItem label="手机号" path="tel">

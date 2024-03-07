@@ -1,5 +1,5 @@
 import type { AxiosProgressEvent, GenericAbortSignal } from 'axios'
-import { post, get, del, put } from '../utils/request'
+import { post, get, del, put } from '@/utils/request'
 
 // 获取配置信息
 export function fetchChatConfig<T>() {

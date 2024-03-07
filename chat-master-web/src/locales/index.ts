@@ -5,8 +5,8 @@ import koKR from './ko-KR'
 import zhCN from './zh-CN'
 import zhTW from './zh-TW'
 import ruRU from './ru-RU'
-import { useAppStoreWithOut } from '../store/modules/app'
-import type { Language } from '../store/modules/app/helper'
+import { useAppStoreWithOut } from '@/store/modules/app'
+import type { Language } from '@/store/modules/app/helper'
 
 const appStore = useAppStoreWithOut()
 

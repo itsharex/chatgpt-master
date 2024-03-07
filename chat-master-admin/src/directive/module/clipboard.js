@@ -2,7 +2,7 @@
 * v-clipboard 文字复制剪贴
 */
 
-import Clipboard from './clipboard'
+import Clipboard from 'clipboard'
 export default {
   bind(el, binding, vnode) {
     switch (binding.arg) {
