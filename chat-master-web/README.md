@@ -24,8 +24,6 @@ GitHub直通车[点我传送](https://github.com/panday94/chatgpt-master)
 
 网页端演示地址：https://gpt.panday94.xyz
 
-移动端演示地址：https://gpt.panday94.xyz/h5
-
 管理端演示地址：https://gpt.panday94.xyz/admin  账号密码：master chatmaster
 
 ![cover](./docs/login.jpg)
