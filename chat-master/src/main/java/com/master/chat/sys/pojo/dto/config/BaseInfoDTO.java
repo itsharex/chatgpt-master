@@ -8,10 +8,11 @@ import java.util.List;
 /**
  * 基础信息
  *
- * @author: yang
+ * @author: Yang
  * @date: 2023/5/6
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Data
 public class BaseInfoDTO implements Serializable {
@@ -34,14 +35,19 @@ public class BaseInfoDTO implements Serializable {
     private String siteLogo;
 
     /**
-     * 代理方案 1 环境代理 2 方向代理 3 直接代理
+     * 代理方案 1 无需代理 2 反向代理 3 本地代理
      */
     private Integer proxyType;
 
     /**
-     * 代理地址
+     * 反代地址
      */
     private String proxyServer;
+
+    /**
+     * 本地代理地址
+     */
+    private String proxyAddress;
 
     /**
      * 域名

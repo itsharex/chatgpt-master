@@ -3,17 +3,17 @@ package com.master.chat.gpt.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.master.chat.gpt.mapper.UploadFileMapper;
-import com.master.chat.gpt.pojo.command.UploadFileCommand;
-import com.master.chat.gpt.pojo.entity.UploadFile;
-import com.master.chat.gpt.pojo.vo.UploadFileVO;
-import com.master.chat.gpt.service.IUploadFileService;
 import com.master.chat.common.api.IPageInfo;
 import com.master.chat.common.api.Query;
 import com.master.chat.common.api.ResponseInfo;
 import com.master.chat.common.exception.ErrorException;
 import com.master.chat.common.utils.DozerUtil;
 import com.master.chat.common.validator.ValidatorUtil;
+import com.master.chat.gpt.mapper.UploadFileMapper;
+import com.master.chat.gpt.pojo.command.UploadFileCommand;
+import com.master.chat.gpt.pojo.entity.UploadFile;
+import com.master.chat.gpt.pojo.vo.UploadFileVO;
+import com.master.chat.gpt.service.IUploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,8 @@ import java.util.List;
  * @author: Yang
  * @date: 2023-04-28
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Service
 public class UploadFileServiceImpl extends ServiceImpl<UploadFileMapper, UploadFile> implements IUploadFileService {

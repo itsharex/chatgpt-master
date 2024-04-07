@@ -1,11 +1,11 @@
 package com.master.chat.controller.sys;
 
-import com.master.chat.framework.base.BaseController;
-import com.master.chat.sys.pojo.vo.AuditLogVO;
-import com.master.chat.sys.service.IAuditLogService;
 import com.master.chat.common.api.IPageInfo;
 import com.master.chat.common.api.QueryDTO;
 import com.master.chat.common.api.ResponseInfo;
+import com.master.chat.framework.base.BaseController;
+import com.master.chat.sys.pojo.vo.AuditLogVO;
+import com.master.chat.sys.service.IAuditLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @RestController
 @RequestMapping("/audit-log")

@@ -1,3 +1,44 @@
+## v1.1.6.1
+
+`2024-03-26`
+
+> [chat-master-web](https://gitee.com/yoli9/chat-master-web)
+
+## Enhancement
+- 增加月之暗面支持
+- 
+## BugFix
+- 只返回启用模型
+
+## v1.1.6
+
+`2024-03-17`
+
+> [chat-master](https://gitee.com/yoli9/chat-master)
+
+## Enhancement
+- 将限制访问从系统配置中转到应用配置中，方便配置
+- openai兼容本地环境代理
+- 更新通义千问sdk版本，更新讯飞星火3.5版本，更新ChatGLM版本到4.0
+- 增加模型管理接口
+
+## BugFix
+- 解决消息回复失败恢复电量时 没有判断是否开启限制访问（限制访问时才会扣除电量）
+
+## v1.1.5
+
+`2024-03-14`
+
+> [chat-master](https://gitee.com/yoli9/chat-master)
+
+## Enhancement
+- 增加腾讯云oss及sms方法，发送短信及上传图片功能由后台配置
+- 可后台配置用户协议及站点logo，web端和移动端展示
+- 用户信息及密钥信息加密返回
+
+## BugFix
+- 解决部分页面搜索问题
+
 ## v1.1.4
 
 `2024-03-04`

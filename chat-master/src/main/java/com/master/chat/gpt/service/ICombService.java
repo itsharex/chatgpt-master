@@ -1,12 +1,12 @@
 package com.master.chat.gpt.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.master.chat.gpt.pojo.command.CombCommand;
-import com.master.chat.gpt.pojo.entity.Comb;
-import com.master.chat.gpt.pojo.vo.CombVO;
 import com.master.chat.common.api.IPageInfo;
 import com.master.chat.common.api.Query;
 import com.master.chat.common.api.ResponseInfo;
+import com.master.chat.gpt.pojo.command.CombCommand;
+import com.master.chat.gpt.pojo.entity.Comb;
+import com.master.chat.gpt.pojo.vo.CombVO;
 
 import java.util.List;
 
@@ -16,7 +16,8 @@ import java.util.List;
  * @author: Yang
  * @date: 2023-04-28
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 public interface ICombService extends IService<Comb> {
 

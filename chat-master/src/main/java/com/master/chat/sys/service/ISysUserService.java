@@ -1,15 +1,15 @@
 package com.master.chat.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.master.chat.common.api.IPageInfo;
+import com.master.chat.common.api.Query;
+import com.master.chat.common.api.ResponseInfo;
 import com.master.chat.sys.pojo.command.SysUserCommand;
 import com.master.chat.sys.pojo.command.SysUserPasswordCommand;
 import com.master.chat.sys.pojo.dto.SysUserPreDTO;
 import com.master.chat.sys.pojo.entity.SysUser;
 import com.master.chat.sys.pojo.vo.ContactUserVO;
 import com.master.chat.sys.pojo.vo.SysUserVO;
-import com.master.chat.common.api.IPageInfo;
-import com.master.chat.common.api.Query;
-import com.master.chat.common.api.ResponseInfo;
 
 import java.util.List;
 
@@ -19,7 +19,8 @@ import java.util.List;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 public interface ISysUserService extends IService<SysUser> {
 

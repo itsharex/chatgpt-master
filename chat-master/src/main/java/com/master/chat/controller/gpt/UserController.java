@@ -1,15 +1,15 @@
 package com.master.chat.controller.gpt;
 
-import com.master.chat.framework.base.BaseController;
-import com.master.chat.gpt.pojo.command.UserCommand;
-import com.master.chat.gpt.pojo.vo.UserVO;
-import com.master.chat.gpt.service.IUserService;
-import com.master.chat.sys.constant.SysLogTypeConstant;
 import com.master.chat.common.annotation.Log;
 import com.master.chat.common.api.IPageInfo;
 import com.master.chat.common.api.Query;
 import com.master.chat.common.api.ResponseInfo;
 import com.master.chat.common.enums.BusinessTypeEnum;
+import com.master.chat.framework.base.BaseController;
+import com.master.chat.gpt.pojo.command.UserCommand;
+import com.master.chat.gpt.pojo.vo.UserVO;
+import com.master.chat.gpt.service.IUserService;
+import com.master.chat.sys.constant.SysLogTypeConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +24,8 @@ import java.util.Map;
  * @author: Yang
  * @date: 2023-04-28
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @RestController
 @RequestMapping("/gpt/user" )

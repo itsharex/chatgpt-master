@@ -28,7 +28,8 @@ import java.util.List;
  * @author: Yang
  * @date: 2023-04-28
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Service
 public class AssistantServiceImpl extends ServiceImpl<AssistantMapper, Assistant> implements IAssistantService {
@@ -50,7 +51,7 @@ public class AssistantServiceImpl extends ServiceImpl<AssistantMapper, Assistant
     }
 
     @Override
-    public ResponseInfo<IPageInfo<AssistantVO>> pageAssistant(Query query) {
+    public ResponseInfo<IPageInfo<AssistantVO>>  pageAssistant(Query query) {
         IPage<AssistantVO> iPage = assistantMapper.pageAssistant(new Page<>(query.getCurrent(), query.getSize()), query);
         return ResponseInfo.success(new IPageInfo(iPage.getCurrent(), iPage.getSize(), iPage.getTotal(), iPage.getRecords()));
     }

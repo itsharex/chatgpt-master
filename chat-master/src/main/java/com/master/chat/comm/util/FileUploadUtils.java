@@ -3,7 +3,6 @@ package com.master.chat.comm.util;
 import cn.hutool.core.util.IdUtil;
 import com.master.chat.comm.constant.Constants;
 import com.master.chat.comm.constant.OssConstant;
-import com.master.chat.framework.config.SystemConfig;
 import com.master.chat.common.api.FileInfo;
 import com.master.chat.common.constant.StringPoolConstant;
 import com.master.chat.common.exception.BusinessException;
@@ -11,6 +10,7 @@ import com.master.chat.common.exception.FileException;
 import com.master.chat.common.utils.DateUtil;
 import com.master.chat.common.utils.file.MimeTypeUtils;
 import com.master.chat.common.validator.ValidatorUtil;
+import com.master.chat.framework.config.SystemConfig;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
@@ -27,7 +27,8 @@ import java.time.LocalDate;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 public class FileUploadUtils {
 

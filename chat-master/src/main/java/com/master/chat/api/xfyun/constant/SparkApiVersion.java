@@ -8,7 +8,8 @@ import lombok.Getter;
  * @author: Yang
  * @date: 2023/09/06
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Getter
 public enum SparkApiVersion {
@@ -22,7 +23,8 @@ public enum SparkApiVersion {
      * 2.0版本
      */
     V2_0("v2.1", "https://spark-api.xf-yun.com/v2.1/chat", "generalv2"),
-    V3_0("v3.1", "https://spark-api.xf-yun.com/v2.1/chat", "generalv3"),
+    V3_0("v3.1", "https://spark-api.xf-yun.com/v3.1/chat", "generalv3"),
+    V3_5("v3.5", "https://spark-api.xf-yun.com/v3.5/chat", "generalv3.5"),
     ;
 
     private final String version;

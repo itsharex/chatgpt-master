@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
  * @author: Yang
  * @date: 2023-04-28
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Data
 public class AssistantVO implements Serializable {
@@ -44,14 +45,19 @@ public class AssistantVO implements Serializable {
     private String typeName;
 
     /**
-     * 角色名称
+     * 头像
      */
-    private String title;
+    private String avatar;
 
     /**
      * 角色图标
      */
     private String icon;
+
+    /**
+     * 角色名称
+     */
+    private String title;
 
     /**
      * 标签

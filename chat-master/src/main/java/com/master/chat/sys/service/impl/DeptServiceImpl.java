@@ -3,13 +3,6 @@ package com.master.chat.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.master.chat.sys.mapper.DeptMapper;
-import com.master.chat.sys.mapper.SysUserDeptMapper;
-import com.master.chat.sys.pojo.command.DeptCommand;
-import com.master.chat.sys.pojo.entity.Dept;
-import com.master.chat.sys.pojo.entity.SysUserDept;
-import com.master.chat.sys.pojo.vo.DeptVO;
-import com.master.chat.sys.service.IDeptService;
 import com.master.chat.common.api.QueryDTO;
 import com.master.chat.common.api.ResponseInfo;
 import com.master.chat.common.constant.StringPoolConstant;
@@ -18,6 +11,13 @@ import com.master.chat.common.exception.ErrorException;
 import com.master.chat.common.utils.DozerUtil;
 import com.master.chat.common.utils.TreeUtil;
 import com.master.chat.common.validator.ValidatorUtil;
+import com.master.chat.sys.mapper.DeptMapper;
+import com.master.chat.sys.mapper.SysUserDeptMapper;
+import com.master.chat.sys.pojo.command.DeptCommand;
+import com.master.chat.sys.pojo.entity.Dept;
+import com.master.chat.sys.pojo.entity.SysUserDept;
+import com.master.chat.sys.pojo.vo.DeptVO;
+import com.master.chat.sys.service.IDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +30,8 @@ import java.util.List;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {

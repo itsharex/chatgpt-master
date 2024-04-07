@@ -1,13 +1,13 @@
 package com.master.chat.framework.security;
 
+import com.master.chat.common.constant.AuthConstant;
+import com.master.chat.common.enums.ResponseEnum;
+import com.master.chat.common.validator.ValidatorUtil;
 import com.master.chat.gpt.pojo.vo.UserVO;
 import com.master.chat.gpt.service.IUserService;
 import com.master.chat.sys.pojo.vo.SysUserVO;
 import com.master.chat.sys.service.IResourceService;
 import com.master.chat.sys.service.ISysUserService;
-import com.master.chat.common.constant.AuthConstant;
-import com.master.chat.common.enums.ResponseEnum;
-import com.master.chat.common.validator.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,7 +28,8 @@ import java.util.Set;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

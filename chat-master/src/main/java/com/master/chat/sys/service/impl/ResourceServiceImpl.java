@@ -3,6 +3,16 @@ package com.master.chat.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.master.chat.comm.constant.ResourceConstants;
+import com.master.chat.sys.mapper.ResourceMapper;
+import com.master.chat.sys.mapper.RoleResourceMapper;
+import com.master.chat.sys.pojo.command.ResourceCommand;
+import com.master.chat.sys.pojo.dto.SysUserRolesDTO;
+import com.master.chat.sys.pojo.entity.Resource;
+import com.master.chat.sys.pojo.vo.MetaVO;
+import com.master.chat.sys.pojo.vo.ResourceVO;
+import com.master.chat.sys.pojo.vo.RouterVO;
+import com.master.chat.sys.service.IResourceService;
+import com.master.chat.sys.service.ISysUserRoleService;
 import com.master.chat.common.api.QueryDTO;
 import com.master.chat.common.api.ResponseInfo;
 import com.master.chat.common.constant.HttpConstant;
@@ -15,16 +25,6 @@ import com.master.chat.common.utils.DozerUtil;
 import com.master.chat.common.utils.StringUtil;
 import com.master.chat.common.utils.TreeUtil;
 import com.master.chat.common.validator.ValidatorUtil;
-import com.master.chat.sys.mapper.ResourceMapper;
-import com.master.chat.sys.mapper.RoleResourceMapper;
-import com.master.chat.sys.pojo.command.ResourceCommand;
-import com.master.chat.sys.pojo.dto.SysUserRolesDTO;
-import com.master.chat.sys.pojo.entity.Resource;
-import com.master.chat.sys.pojo.vo.MetaVO;
-import com.master.chat.sys.pojo.vo.ResourceVO;
-import com.master.chat.sys.pojo.vo.RouterVO;
-import com.master.chat.sys.service.IResourceService;
-import com.master.chat.sys.service.ISysUserRoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,8 @@ import java.util.stream.Collectors;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Service
 public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> implements IResourceService {

@@ -1,5 +1,10 @@
 package com.master.chat.controller.sys;
 
+import com.master.chat.common.annotation.Log;
+import com.master.chat.common.api.IPageInfo;
+import com.master.chat.common.api.Query;
+import com.master.chat.common.api.ResponseInfo;
+import com.master.chat.common.enums.BusinessTypeEnum;
 import com.master.chat.framework.base.BaseController;
 import com.master.chat.sys.constant.SysLogTypeConstant;
 import com.master.chat.sys.pojo.command.DictCommand;
@@ -8,11 +13,6 @@ import com.master.chat.sys.pojo.vo.DictTypeVO;
 import com.master.chat.sys.pojo.vo.DictVO;
 import com.master.chat.sys.service.IDictService;
 import com.master.chat.sys.service.IDictTypeService;
-import com.master.chat.common.annotation.Log;
-import com.master.chat.common.api.IPageInfo;
-import com.master.chat.common.api.Query;
-import com.master.chat.common.api.ResponseInfo;
-import com.master.chat.common.enums.BusinessTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,8 @@ import java.util.Map;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @RestController
 @RequestMapping("/dict")

@@ -6,7 +6,8 @@ package com.master.chat.comm.constant;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 public interface SysConfigConstants {
 
@@ -24,10 +25,5 @@ public interface SysConfigConstants {
      * 是否开启同时登录
      */
     String ALL_LOGIN = "sys.account.allLogin";
-
-    /**
-     * 是否限制访问ChatMaster开关
-     */
-    String CHAT_MASTER_ON_OFF = "sys.chat.master";
 
 }

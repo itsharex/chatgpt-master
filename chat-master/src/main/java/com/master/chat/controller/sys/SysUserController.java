@@ -6,6 +6,7 @@ import com.master.chat.comm.enums.OssEnum;
 import com.master.chat.comm.util.AliyunOSSUtil;
 import com.master.chat.comm.util.ExcelUtil;
 import com.master.chat.comm.util.FileUploadUtils;
+import com.master.chat.comm.util.TencentCOSUtil;
 import com.master.chat.framework.base.BaseController;
 import com.master.chat.framework.config.SystemConfig;
 import com.master.chat.framework.listener.ExcelListener;
@@ -48,7 +49,8 @@ import java.util.Map;
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @RestController
 @RequestMapping("/sys-user")
@@ -201,11 +203,15 @@ public class SysUserController extends BaseController {
             String filePath = SystemConfig.uploadPath + FileUploadUtils.getPathName(pathName);
             fileInfo = FileUploadUtils.upload(filePath, file);
             fileInfo.setFileUrl(SystemConfig.baseUrl + fileInfo.getFileUrl());
-        }else if (OssEnum.ALI.getValue().equals(extraInfo.getOssType())) {
-            fileInfo = AliyunOSSUtil.uploadFile(file, FileUploadUtils.getPathName(pathName));
-        }
-        if (ValidatorUtil.isNull(fileInfo)) {
+        } else if (OssEnum.ALI.getValue().equals(extraInfo.getOssType())) {
+            fileInfo = AliyunOSSUtil.uploadFile(extraInfo, file, FileUploadUtils.getPathName(pathName));
+        } else if (OssEnum.TECENT.getValue().equals(extraInfo.getOssType())) {
+            fileInfo = TencentCOSUtil.upload(extraInfo, file, FileUploadUtils.getPathName(pathName));
+        } else {
             return ResponseInfo.validateFail("未知的上传文件方式，上传失败");
+        }
+        if (ValidatorUtil.isNull(fileInfo) || ValidatorUtil.isNull(fileInfo.getFileUrl())) {
+            return ResponseInfo.validateFail("上传失败");
         }
         sysUserService.updateSysUserAvatar(getSysUserId(), fileInfo.getFileUrl());
         return ResponseInfo.success(fileInfo);

@@ -1,6 +1,5 @@
 package com.master.chat.gpt.pojo.vo;
 
-import com.alibaba.fastjson.JSONObject;
 import com.master.chat.sys.pojo.dto.config.AppInfoDTO;
 import com.master.chat.sys.pojo.dto.config.BaseInfoDTO;
 import com.master.chat.sys.pojo.dto.config.ExtraInfoDTO;
@@ -16,10 +15,11 @@ import java.util.List;
 /**
  * app配置信息
  *
- * @author: yang
+ * @author: Yang
  * @date: 2023/5/4
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Data
 @Builder

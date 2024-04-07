@@ -24,7 +24,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @author: Yang
  * @date: 2023/01/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Configuration
 @EnableWebSecurity
@@ -56,8 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(
                 "/global/**", "/static/**", "/images/**", "/druid/**",
-                "/oauth/token", "/logout", "/captchaImage", "/files/**", "/api/**", "/app/api/**",
-                "/common/**", "/sys-user/register", "/websocket/**");
+                "/oauth/token", "/logout", "/captchaImage", "/files/**", "/api/**", "/app/api/**", "/app/chat/websocket/**",
+                "/common/**", "/sys-user/register");
     }
 
     /**

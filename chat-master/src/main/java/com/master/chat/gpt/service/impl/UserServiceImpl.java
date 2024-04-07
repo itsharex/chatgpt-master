@@ -5,16 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.master.chat.common.api.IPageInfo;
-import com.master.chat.common.api.Query;
-import com.master.chat.common.api.ResponseInfo;
-import com.master.chat.common.enums.ResponseEnum;
-import com.master.chat.common.exception.ErrorException;
-import com.master.chat.common.exception.ProhibitVisitException;
-import com.master.chat.common.utils.CommonUtil;
-import com.master.chat.common.utils.DozerUtil;
-import com.master.chat.common.utils.RandomUtil;
-import com.master.chat.common.validator.ValidatorUtil;
 import com.master.chat.framework.security.JWTPasswordEncoder;
 import com.master.chat.gpt.constant.BaseConfigConstant;
 import com.master.chat.gpt.enums.UserTypeEnum;
@@ -26,6 +16,16 @@ import com.master.chat.gpt.service.IUserService;
 import com.master.chat.sys.pojo.command.SysUserPasswordCommand;
 import com.master.chat.sys.pojo.dto.config.AppInfoDTO;
 import com.master.chat.sys.service.IBaseConfigService;
+import com.master.chat.common.api.IPageInfo;
+import com.master.chat.common.api.Query;
+import com.master.chat.common.api.ResponseInfo;
+import com.master.chat.common.enums.ResponseEnum;
+import com.master.chat.common.exception.ErrorException;
+import com.master.chat.common.exception.ProhibitVisitException;
+import com.master.chat.common.utils.CommonUtil;
+import com.master.chat.common.utils.DozerUtil;
+import com.master.chat.common.utils.RandomUtil;
+import com.master.chat.common.validator.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +39,8 @@ import java.util.List;
  * @author: Yang
  * @date: 2023-04-28
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
@@ -78,7 +79,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public ResponseInfo<UserVO> getUserById(Long id) {
-        return ResponseInfo.success(DozerUtil.convertor(getUser(id), UserVO.class));
+        UserVO userVO = DozerUtil.convertor(getUser(id), UserVO.class);
+        if (ValidatorUtil.isNull(userVO)) {
+            throw new ProhibitVisitException("会员用户信息不存在，无法操作");
+        }
+        userVO.setTel(CommonUtil.mobileEncrypt(userVO.getTel()));
+        return ResponseInfo.success(userVO);
     }
 
     @Override
@@ -87,7 +93,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (ValidatorUtil.isNull(user)) {
             throw new ProhibitVisitException("会员用户信息不存在，无法操作");
         }
-        return ResponseInfo.success(DozerUtil.convertor(user, UserVO.class));
+        UserVO userVO = DozerUtil.convertor(user, UserVO.class);
+        userVO.setTel(CommonUtil.mobileEncrypt(userVO.getTel()));
+        return ResponseInfo.success(userVO);
     }
 
     @Override
@@ -140,7 +148,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Transactional(rollbackFor = Exception.class, transactionManager = "masterTransactionManager")
     public ResponseInfo updateUser(UserCommand command) {
         User user = getUser(command.getId());
-        DozerUtil.convertor(command, user);
+        user.setNickName(command.getNickName());
         user.setUpdateUser(command.getOperater());
         user.setUpdateTime(LocalDateTime.now());
         userMapper.updateById(user);

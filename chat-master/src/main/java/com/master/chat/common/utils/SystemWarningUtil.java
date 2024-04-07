@@ -9,8 +9,6 @@ import com.master.chat.common.constant.StringPoolConstant;
 import com.master.chat.common.enums.ResponseEnum;
 import com.master.chat.common.enums.SpringProfilesEnum;
 import com.master.chat.common.exception.SystemException;
-import com.master.chat.common.utils.ApplicationContextUtil;
-import com.master.chat.common.utils.DateUtil;
 import com.master.chat.common.validator.ValidatorUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +23,8 @@ import java.util.StringJoiner;
  * @author: Yang
  * @date: 2020/3/31
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Slf4j
 public class SystemWarningUtil {

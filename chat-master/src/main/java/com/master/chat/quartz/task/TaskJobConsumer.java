@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 /**
  * 定时任务
  *
- * @author: 周杰
+ * @author: Yang
  * @date: 2023/01/31
  * @version: master
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Log4j2
 @EnableScheduling

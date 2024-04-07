@@ -2,9 +2,9 @@ package com.master.chat.gpt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.master.chat.common.api.Query;
 import com.master.chat.gpt.pojo.entity.ChatMessage;
 import com.master.chat.gpt.pojo.vo.ChatMessageVO;
-import com.master.chat.common.api.Query;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -16,7 +16,8 @@ import java.util.List;
  * @author: Yang
  * @date: 2023-04-28
  * @version: 1.0.0
- * Copyright Ⓒ 2023 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 public interface ChatMessageMapper extends BaseMapper<ChatMessage> {
 
