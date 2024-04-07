@@ -4,7 +4,7 @@ import { NButton } from "naive-ui";
 import * as emoji from "node-emoji";
 import { listAssistantRandom } from "@/api";
 import { t } from "@/locales";
-import logom from "@/assets/logo-m.jpg";
+import logom from "@/assets/logom.jpg";
 import { SvgIcon } from "@/components/common";
 import { getGreeting } from "@/utils/functions";
 import { useBasicLayout } from "@/hooks/useBasicLayout";
@@ -86,6 +86,7 @@ function jumpMayun() {
         <NButton quaternary type="primary" @click="jumpMayun()">传送门</NButton>
       </div>
       <div class="text-[15px] text-[#1a2029] dark:text-white pl-10">{{ t('chat.subTitle') }}</div>
+      <div class="text-[15px] text-[#1a2029] dark:text-white pl-10">{{ t('chat.wxappTitle') }}</div>
     </div>
     <div class="mb-1 flex justify-between">
       <div class="text-[15px] pl-10 font-medium">{{ t('chat.try') }}</div>

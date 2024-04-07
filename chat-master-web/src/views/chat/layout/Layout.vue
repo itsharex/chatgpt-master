@@ -15,6 +15,8 @@ router.replace({ name: "Chat", params: { chatNumber: chatStore.active } });
 
 const { isMobile } = useBasicLayout();
 
+const theme = computed(() => appStore.theme)
+
 const collapsed = computed(() => appStore.siderCollapsed);
 
 const getMobileClass = computed(() => {
@@ -28,6 +30,9 @@ const getContainerClass = computed(() => {
     !isMobile.value && !collapsed.value ? "pl-[280px]" : "pl-[80px]"
   ];
 });
+const getFontColor = computed(() => {
+  return theme.value == 'light' ? '#eee' : '#24272e';
+});
 </script>
 
 <template>
@@ -40,7 +45,7 @@ const getContainerClass = computed(() => {
           fullscreen
           :font-size="14"
           :line-height="14"
-          font-color="#eee"
+          :font-color="getFontColor"
           :width="384"
           :height="384"
           :x-offset="12"

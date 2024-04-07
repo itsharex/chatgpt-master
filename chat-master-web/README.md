@@ -6,7 +6,7 @@
 
 > 声明：此项目只发布于码云和GitHub，基于 MIT 协议，免费且作为开源学习使用，禁止转卖、谨防受骗。如需商用必须保留版权信息，请自觉遵守。确保合法合规使用，在运营过程中产生的一切任何后果自负，与作者无关。
 
-项目框架基于[chatgpt-web](https://github.com/Chanzhaoyu/chatgpt-web)项目改造，页面UI借鉴ChatGLM项目。支持一键切换ChatGPT(3.5、4.0)模型、文心一言、通义千问、讯飞星火、智谱清言(ChatGLM)等主流模型进行对话，支持文心一言(Stable-Diffusion-XL作图)功能，支持模型及助手后台自定义配置。
+项目框架基于[chatgpt-web](https://github.com/Chanzhaoyu/chatgpt-web)项目改造，页面UI借鉴ChatGLM项目。支持一键切换ChatGPT(3.5、4.0)模型、月之暗面（Kimi）、文心一言、通义千问、讯飞星火、智谱清言(ChatGLM)等主流模型进行对话，支持文心一言(Stable-Diffusion-XL作图)功能，支持模型及助手后台自定义配置。
 
 GitHub直通车[点我传送](https://github.com/panday94/chatgpt-master)
 
@@ -22,11 +22,12 @@ GitHub直通车[点我传送](https://github.com/panday94/chatgpt-master)
 
 ## 演示
 
-网页端演示地址：https://gpt.panday94.xyz
+网页端演示地址：https://gpt.panday94.xyz 移动端可关注公众号[扫码体验](#联系我们)
 
 管理端演示地址：https://gpt.panday94.xyz/admin  账号密码：master chatmaster
 
 ![cover](./docs/login.jpg)
+![cover](./docs/index.png)
 ![cover2](./docs/chat.gif)
 
 - [Chat Master Web](#chat-master-web)
@@ -49,7 +50,7 @@ GitHub直通车[点我传送](https://github.com/panday94/chatgpt-master)
 	- [License](#license)
 ## 介绍
 
-项目基于ChatGpt、文心一言、通义千问、讯飞星火、智谱清言等主流模型开发
+项目基于ChatGPT、文心一言、通义千问、讯飞星火、智谱清言、月之暗面等主流模型开发
 
 | 名称                                          | 免费？ | 是否国内     | 地址 |
 | --------------------------------------------- | ------ | ---------- | ---- |
@@ -58,14 +59,15 @@ GitHub直通车[点我传送](https://github.com/panday94/chatgpt-master)
 | 通义千问 | 否     | 是 | https://tongyi.aliyun.com/ |
 | 讯飞星火 | 否     | 是 | https://xinghuo.xfyun.cn/ |
 | 智谱清言 | 否     | 是 | https://chatglm.cn/ |
+| 月之暗面 | 否     | 是 | https://kimi.moonshot.cn/|
 
 提示：
-1. ChatGpt 通过`Cloudflare`访问openai接口
+1. ChatGPT 通过`Cloudflare`访问openai接口
 2. ChatGPT及国内模型密钥由后台系统配置
 3. 后期可接入使用自己token或者key使用
 
 ## 已实现路线
-[✓] 多模型
+[✓] 多模型、多版本切换
 
 [✓] 多会话储存和上下文逻辑
 
@@ -73,13 +75,13 @@ GitHub直通车[点我传送](https://github.com/panday94/chatgpt-master)
 
 [✓] 个人信息修改及分享
 
-[✓] 界面多语言
+[✓] 会员功能，兑换码、分享功能
 
-[✓] 界面主题
+[✓] 界面多语言、界面主题
 
 [✓] 禁止代码调试
 
-[✗] More...
+[✗] 文档问答、知识库
 
 ## 前置要求
 
@@ -159,7 +161,7 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 
 ## 参与贡献
 
-贡献之前请先阅读 [贡献指南](./CONTRIBUTING.md)
+贡献之前请先阅读 [贡献指南](./CONTRIBUTING.md) [版本记录](./CHANGELOG.md)
 
 个人的力量始终有限，任何形式的贡献都是欢迎的，包括但不限于贡献代码，优化文档，提交 issue 和 PR 等。
 感谢所有做过贡献的人!
@@ -168,9 +170,11 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 
 如果你觉得这个项目对你有帮助，并且情况允许的话，可以给我一点点支持，总之非常感谢支持～
 
+接定制开发，欢迎老板下单！
+
 <div style="display: flex; gap: 20px;">
 	<div style="text-align: center">
-		<img style="max-width: 100%" src="./docs/wechat.jpg" alt="微信" />
+		<img style="max-width: 100%" src="./docs/wepay.jpg" alt="微信" />
 		<p>WeChat Pay</p>
 	</div>
 </div>
@@ -182,7 +186,7 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 
 ## 扫码进群
 <div style="display: flex; gap: 20px;">
-    <img style="max-width: 100%" src="./docs/wechat_group.jpg" alt="微信群" />
+    <img style="max-width: 100%" src="https://gpt.panday94.xyz/files/wx_group.jpg" alt="微信群" />
 </div>
 
 ## License

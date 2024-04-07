@@ -4,7 +4,7 @@
             <el-tab-pane label="基础信息" name="baseInfo"></el-tab-pane>
             <el-tab-pane label="应用信息" name="appInfo"></el-tab-pane>
             <el-tab-pane label="微信信息" name="wxInfo"></el-tab-pane>
-            <el-tab-pane label="拓展信息" name="extraInfo"></el-tab-pane>
+            <el-tab-pane label="Oss/Sms信息" name="extraInfo"></el-tab-pane>
         </el-tabs>
         <el-form v-if="activeName == 'baseInfo'" ref="form" :model="baseInfo" label-width="130px">
             <el-form-item label="站点名称">
@@ -22,7 +22,7 @@
                     @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
                 </el-input>
                 <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
-            </el-form-item>
+            </el-form-item> 
             <el-form-item label="内容安全审查接口">
                 <el-switch v-model="baseInfo.contentSecurity" active-text="开启" :active-value="1" :inactive-value="0"
                     inactive-text="关闭">
@@ -36,15 +36,19 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="反代服务器" v-if="baseInfo.proxyType == 2">
-                <el-input style="width: 200px" placeholder="请填写反代服务器地址" v-model="baseInfo.proxyServer">
+                <el-input style="width: 260px" placeholder="请填写反代服务器地址" v-model="baseInfo.proxyServer">
+                </el-input>
+            </el-form-item>
+            <el-form-item label="代理地址" v-if="baseInfo.proxyType == 3">
+                <el-input style="width: 260px" placeholder="请填写代理地址，如'127.0.0.1:8088'" v-model="baseInfo.proxyAddress">
                 </el-input>
             </el-form-item>
             <el-form-item label="绑定域名">
-                <el-input style="width: 200px" placeholder="请填写访问域名" v-model="baseInfo.domain">
+                <el-input style="width: 260px" placeholder="请填写访问域名" v-model="baseInfo.domain">
                 </el-input>
             </el-form-item>
             <el-form-item label="站点版权">
-                <el-input style="width: 200px" placeholder="请填写站点版权" v-model="baseInfo.copyright">
+                <el-input style="width: 260px" placeholder="请填写站点版权" v-model="baseInfo.copyright">
                 </el-input>
             </el-form-item>
             <el-form-item label="站点描述">
@@ -52,16 +56,21 @@
                 </el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('baseInfo', baseInfo)">保存</el-button>
+                <el-button v-hasPermi="['sys:base:config:save']" type="primary" @click="onSubmit('baseInfo', baseInfo)">保存</el-button>
             </el-form-item>
         </el-form>
-        <el-form v-if="activeName == 'appInfo'" ref="form" :model="appInfo" label-width="130px">
+        <el-form v-if="activeName == 'appInfo'" ref="form" :model="appInfo" label-width="140px">
             <el-form-item label="H5地址">
-                <el-input style="width: 200px" placeholder="请填写H5地址" v-model="appInfo.h5Url"></el-input>
+                <el-input style="width: 220px" placeholder="请填写H5地址" v-model="appInfo.h5Url"></el-input>
                 <div>如托管到服务器，此处填写“域名/h5/”</div>
             </el-form-item>
+            <el-form-item label="是否无限制访问GPT">
+                <el-switch v-model="appInfo.isGptLimit" active-text="是" :active-value="1" :inactive-value="0"
+                    inactive-text="否">
+                </el-switch>
+            </el-form-item>
             <el-form-item label="免费体验次数">
-                <el-input style="width: 200px" placeholder="请填写免费体验次数" v-model="appInfo.freeNum"></el-input>
+                <el-input style="width: 220px" placeholder="请填写免费体验次数" v-model="appInfo.freeNum"></el-input>
             </el-form-item>
             <el-form-item label="是否分享获取次数">
                 <el-switch v-model="appInfo.isShare" active-text="开启" :active-value="1" :inactive-value="0"
@@ -69,7 +78,7 @@
                 </el-switch>
             </el-form-item>
             <el-form-item label="分享获取次数">
-                <el-input style="width: 200px" placeholder="请填写分享获取次数" v-model="appInfo.shareRewardNum">
+                <el-input style="width: 220px" placeholder="请填写分享获取次数" v-model="appInfo.shareRewardNum">
                 </el-input>
             </el-form-item>
             <el-form-item label="是否开启注册短信">
@@ -83,7 +92,7 @@
                 </el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('appInfo', appInfo)">保存</el-button>
+                <el-button v-hasPermi="['sys:base:config:save']" type="primary" @click="onSubmit('appInfo', appInfo)">保存</el-button>
             </el-form-item>
         </el-form>
         <el-form v-if="activeName == 'wxInfo'" ref="form" :model="wxInfo" label-width="130px">
@@ -123,11 +132,11 @@
                 </el-input>
             </el-form-item>
             <el-form-item label="支付证书">
-                <el-input style="width: 200px" placeholder="请填写反代服务器地址" v-model="wxInfo.payCert">
+                <el-input style="width: 200px" placeholder="请填写服务器支付证书地址" v-model="wxInfo.payCert">
                 </el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('wxInfo', wxInfo)">保存</el-button>
+                <el-button v-hasPermi="['sys:base:config:save']" type="primary" @click="onSubmit('wxInfo', wxInfo)">保存</el-button>
             </el-form-item>
         </el-form>
         <el-form v-if="activeName == 'extraInfo'" ref="form" :model="extraInfo" label-width="130px">
@@ -139,6 +148,12 @@
             </el-form-item>
             <el-form-item label="上传大小限制(MB)">
                 <el-input style="width: 200px" placeholder="请填写上传大小限制" v-model="extraInfo.uploadSize"></el-input>
+            </el-form-item>
+            <el-form-item v-if="extraInfo.ossType != 1" label="仓库区域">
+                <el-input style="width: 250px" placeholder="请输入ENDPOINT如：cn-shanghai" v-model="extraInfo.endpoint"></el-input>
+            </el-form-item>
+            <el-form-item v-if="extraInfo.ossType != 1" label="仓库名称">
+                <el-input style="width: 250px" placeholder="请输入Oss仓库BUCKET_NAME" v-model="extraInfo.bucketName"></el-input>
             </el-form-item>
             <el-form-item v-if="extraInfo.ossType != 1" label="密钥ID">
                 <el-input style="width: 200px" placeholder="请填写密钥ID" v-model="extraInfo.ossKeyId"></el-input>
@@ -152,14 +167,26 @@
                         :value="item.value"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="密钥ID">
+            <el-form-item v-if="extraInfo.smsType != 0" label="短信区域">
+                <el-input style="width: 250px" placeholder="请输入REGION如：cn-shanghai" v-model="extraInfo.smsRegionId"></el-input>
+            </el-form-item>
+            <el-form-item v-if="extraInfo.smsType == 2" label="应用ID">
+                <el-input style="width: 250px" placeholder="请输入AppId" v-model="extraInfo.smsAppId"></el-input>
+            </el-form-item>
+            <el-form-item v-if="extraInfo.smsType != 0" label="密钥ID">
                 <el-input style="width: 200px" placeholder="请填写密钥ID" v-model="extraInfo.smsKeyId"></el-input>
             </el-form-item>
-            <el-form-item label="密钥Secret">
+            <el-form-item v-if="extraInfo.smsType != 0" label="密钥Secret">
                 <el-input style="width: 200px" placeholder="请填写密钥Secret" v-model="extraInfo.smsKeySecret"></el-input>
             </el-form-item>
+            <el-form-item v-if="extraInfo.smsType != 0" label="短信签名">
+                <el-input style="width: 200px" placeholder="请填写短信签名" v-model="extraInfo.smsSign"></el-input>
+            </el-form-item>
+            <el-form-item v-if="extraInfo.smsType != 0" label="注册模版">
+                <el-input style="width: 200px" placeholder="请填写密钥注册模版" v-model="extraInfo.registerTemplate"></el-input>
+            </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('extraInfo', extraInfo)">保存</el-button>
+                <el-button v-hasPermi="['sys:base:config:save']" type="primary" @click="onSubmit('extraInfo', extraInfo)">保存</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -181,14 +208,15 @@ export default {
             inputVisible: false,
             inputValue: '',
             proxyTypes: [
-                { label: '环境代理', value: 1 },
+                { label: '无需代理', value: 1 },
                 { label: '反向代理', value: 2 },
-                { label: '直接代理', value: 3 },
+                { label: '本地代理', value: 3 },
             ],
             form: {},
             baseInfo: {
             },
             appInfo: {
+                isGptLimit: 0
             },
             wxInfo: {
             },

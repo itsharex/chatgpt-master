@@ -5,6 +5,7 @@ import wxapp from '@/assets/wxapp.jpg'
 import { SvgIcon } from '@/components/common'
 import { defineAsyncComponent } from 'vue'
 import { useAppStore, useChatStore } from '@/store'
+import { useBasicLayout } from "@/hooks/useBasicLayout";
 import { NPopover, NDropdown, useMessage } from 'naive-ui'
 import { fetchModel } from '@/api'
 import type { Theme } from '@/store/modules/app/helper'
@@ -16,6 +17,7 @@ const Setting = defineAsyncComponent(() => import('@/components/common/Setting/i
 const theme = computed(() => appStore.theme)
 const model = computed(() => chatStore.model)
 const show = ref(false)
+const { isMobile } = useBasicLayout();
 const models = ref<Chat.Model[]>()
 const options = ref<any>()
 
@@ -98,61 +100,88 @@ function updateOptions() {
         return option;
     })
 }
-
 </script>
 <template>
-    <div>
-        <!-- 侧边 -->
-        <div class="flex h-full bg-white dark:bg-[#18181c] absolute left-0 z-50">
-            <div class="flex flex-col items-center justify-between w-20 border-r dark:border-[#2d2d30]">
-                <div class="flex flex-col items-center">
-                    <img :src="logo" class="mt-3 w-[70px] h-[76px] cursor-pointer" />
-                    <div
-                        class="flex flex-col items-center mt-5 w-14 bg-slate-100 dark:bg-[#24272e] p-2 rounded-lg cursor-pointer hover:bg-slate-100 ">
-                        <SvgIcon icon="ri:message-line" class="mb-2 text-xl" />
-                        <div class="text-xs font-semibold">{{ $t('chat.duiHua') }}</div>
-                    </div>
-                    <div class="flex flex-col items-center mt-5 w-14 dark:bg-[#18181c] p-2 rounded-lg cursor-pointer hover:bg-slate-100 hover:dark:bg-[#24272e]"
-                        @click="changePicture()">
-                        <SvgIcon icon="icon-park-outline:picture" class="mb-2 text-xl" />
-                        <div class="text-xs font-semibold">{{ $t('chat.picture') }}</div>
-                    </div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div
-                        class="flex justify-center items-center rounded-3xl cursor-pointer mb-6  dark:bg-[#24272e] w-9 h-9 hover:bg-slate-200">
-                        <NDropdown trigger="hover" placement="right-start" :options="options" @select="handleSelect"
-                            style="border: none;">
-                            <SvgIcon :name="model" width="32" height="32" />
-                        </NDropdown>
-                    </div>
-                    <div class="flex justify-center items-center rounded-3xl cursor-pointer mb-6 bg-slate-100 dark:bg-[#24272e] w-9 h-9 hover:bg-slate-200"
-                        @click="changeTheme()">
-                        <SvgIcon :icon="theme == 'light' ? 'ri:sun-foggy-line' : 'ri:moon-foggy-line'" class="text-2xl" />
-                    </div>
-                    <div class="flex justify-center items-center rounded-3xl cursor-pointer mb-6 bg-slate-100 dark:bg-[#24272e] w-9 h-9 hover:bg-slate-200"
-                        @click="show = true">
-                        <SvgIcon icon="lucide:user" class="text-2xl" />
-                    </div>
-                    <div
-                        class="flex justify-center items-center w-14 mb-4 bg-[#18181c] dark:bg-[#24272e] rounded-md h-7 cursor-pointer hover:bg-blue-600 hover:dark:bg-[#24272e]">
-                        <NPopover trigger="hover" raw :show-arrow="false" placement="right" style="margin-left: 17px;">
-                            <template #trigger>
-                                <div class="flex items-center">
-                                    <SvgIcon icon="fluent:phone-16-regular" class="text-lg text-white" />
-                                    <div class="flex text-white text-sm">{{ $t('common.app') }}</div>
-                                </div>
-                            </template>
-                            <div class="bg-[#fff] dark:bg-[#24272e]"
-                                style="width: 220px; height: 220px; padding: 20px 20px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                                <div style="font-weight: 500; margin-bottom: 10px;">{{ $t('common.appTip') }}</div>
-                                <img :src="wxapp" style="width: 150px; height: 150px;" />
-                            </div>
-                        </NPopover>
-                    </div>
-                </div>
-            </div>
+  <div>
+    <!-- 侧边 -->
+    <div class="flex h-full bg-white dark:bg-[#18181c] absolute left-0 z-50">
+      <div class="flex flex-col items-center justify-between w-20 border-r dark:border-[#2d2d30]">
+        <div class="flex flex-col items-center">
+          <img
+            :src="appStore.baseInfo && appStore.baseInfo.siteLogo ? appStore.baseInfo.siteLogo: logo"
+            class="mt-3 w-[70px] h-[70px] cursor-pointer"
+          />
+          <div
+            class="flex flex-col items-center mt-5 w-14 bg-slate-100 dark:bg-[#24272e] p-2 rounded-lg cursor-pointer hover:bg-slate-100"
+          >
+            <SvgIcon icon="ri:message-line" class="mb-2 text-xl" />
+            <div class="text-xs font-semibold">{{ $t('chat.duiHua') }}</div>
+          </div>
+          <div
+            class="flex flex-col items-center mt-5 w-14 dark:bg-[#18181c] p-2 rounded-lg cursor-pointer hover:bg-slate-100 hover:dark:bg-[#24272e]"
+            @click="changePicture()"
+          >
+            <SvgIcon icon="icon-park-outline:picture" class="mb-2 text-xl" />
+            <div class="text-xs font-semibold">{{ $t('chat.picture') }}</div>
+          </div>
         </div>
-        <Setting v-if="show" v-model:visible="show" />
+        <div class="flex flex-col items-center">
+          <div
+            class="flex justify-center items-center rounded-3xl cursor-pointer mb-6 dark:bg-[#24272e] w-9 h-9 hover:bg-slate-200"
+          >
+            <NDropdown
+              trigger="hover"
+              placement="right-start"
+              :options="options"
+              @select="handleSelect"
+              style="border: none;"
+            >
+              <SvgIcon :name="model" width="32" height="32" />
+            </NDropdown>
+          </div>
+          <div
+            class="flex justify-center items-center rounded-3xl cursor-pointer mb-6 bg-slate-100 dark:bg-[#24272e] w-9 h-9 hover:bg-slate-200"
+            @click="changeTheme()"
+          >
+            <SvgIcon
+              :icon="theme == 'light' ? 'ri:sun-foggy-line' : 'ri:moon-foggy-line'"
+              class="text-2xl"
+            />
+          </div>
+          <div v-if="!isMobile"
+            class="flex justify-center items-center rounded-3xl cursor-pointer mb-6 bg-slate-100 dark:bg-[#24272e] w-9 h-9 hover:bg-slate-200"
+            @click="show = true"
+          >
+            <SvgIcon icon="lucide:user" class="text-2xl" />
+          </div>
+          <div
+            class="flex justify-center items-center w-14 mb-4 bg-[#18181c] dark:bg-[#24272e] rounded-md h-7 cursor-pointer hover:bg-blue-600 hover:dark:bg-[#24272e]"
+          >
+            <NPopover
+              trigger="hover"
+              raw
+              :show-arrow="false"
+              placement="right"
+              style="margin-left: 17px;"
+            >
+              <template #trigger>
+                <div class="flex items-center">
+                  <SvgIcon icon="fluent:phone-16-regular" class="text-lg text-white" />
+                  <div class="flex text-white text-sm">{{ $t('common.app') }}</div>
+                </div>
+              </template>
+              <div
+                class="bg-[#fff] dark:bg-[#24272e]"
+                style="width: 220px; height: 220px; padding: 20px 20px; display: flex; justify-content: center; align-items: center; flex-direction: column;"
+              >
+                <div style="font-weight: 500; margin-bottom: 10px;">{{ $t('common.appTip') }}</div>
+                <img :src="wxapp" style="width: 150px; height: 150px;" />
+              </div>
+            </NPopover>
+          </div>
+        </div>
+      </div>
     </div>
+    <Setting v-if="show" v-model:visible="show" />
+  </div>
 </template>

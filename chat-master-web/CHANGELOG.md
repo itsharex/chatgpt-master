@@ -1,3 +1,47 @@
+## v1.1.6.2
+
+`2024-03-28`
+
+> [chat-master-web](https://gitee.com/yoli9/chat-master-web)
+
+## BugFix
+- 退出登录时候暗黑主题兼容问题
+- 登录页兼容h5
+- 修复万花筒一直调用接口问题
+
+## v1.1.6.1
+
+`2024-03-26`
+
+> [chat-master-web](https://gitee.com/yoli9/chat-master-web)
+
+## Enhancement
+- 增加月之暗面支持
+
+## v1.1.6
+
+`2024-03-18`
+
+> [chat-master-web](https://gitee.com/yoli9/chat-master-web)
+
+## Enhancement
+- 统一接口名称
+- copyright使用后台配置
+
+
+## v1.1.5
+
+`2024-03-14`
+
+> [chat-master-web](https://gitee.com/yoli9/chat-master-web)
+
+## Enhancement
+- 网站logo和标题可根据后台设置显示
+- 增加用户协议和隐私政策查看
+
+## BugFix
+- dark主题下水印展示颜色处理；
+
 ## v1.1.2
 
 `2024-01-20`

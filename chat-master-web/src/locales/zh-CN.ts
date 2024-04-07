@@ -27,10 +27,10 @@ export default {
     failed: '操作失败',
     unauthorizedTips: '未经授权，请先进行验证。',
     siteInfo: '© 2023 ChatMASTER 苏ICP备66668888号 江苏Master科技有限公司',
-    userXieyi: '用户协议',
-    privacyZhengce: '隐私政策',
+    userXieyi: '《用户协议》',
+    privacyZhengce: '《隐私政策》',
     app: 'APP',
-    appTip: '扫码访问 ChatMASTER小程序'
+    appTip: '扫码访问 ChatMASTER'
   },
   login: {
     title: '多模型对话，畅所欲言',
@@ -91,6 +91,7 @@ export default {
     placeholderMobile: '来说点什么...',
     title: '禁止转卖、谨防受骗。如需商用必须保留版权信息，请自觉遵守。',
     subTitle: '确保合法合规使用，在运营过程中产生的一切任何后果自负，与作者无关。!',
+    wxappTitle: '移动端访问请点击左下角APP，扫码访问！',
     messageTip: '以上内容为 AI 生成，不代表开发者立场，请勿删除或修改本标记',
     try: '试试以下例子：',
     refresh: '换一换',

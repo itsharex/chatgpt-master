@@ -4,7 +4,14 @@ import { post, get, del, put } from '@/utils/request'
 // 获取配置信息
 export function fetchChatConfig<T>() {
   return get<T>({
-    url: '/app/api/config',
+    url: '/app/api/home/config',
+  })
+}
+
+// 获取配置信息
+export function fetchAgreement<T>(type: Number) {
+  return get<T>({
+    url: '/app/api/content/agreement/' + type,
   })
 }
 
@@ -84,7 +91,7 @@ export function listAssistantType<T>() {
 }
 
 // 根据分类获取助手
-export function listAssistantByType<T>(data: {current: number,size: number,typeId: number}) {
+export function listAssistantByType<T>(data: { current: number, size: number, typeId: number }) {
   return get<T>({
     url: '/app/api/assistant',
     data
@@ -142,7 +149,7 @@ export function fetchChatAPIProcess<T = any>(
   }
 
   return get<T>({
-    url: '/app/chat/stream',
+    url: '/app/chat/completions',
     data,
     signal: params.signal,
     onDownloadProgress: params.onDownloadProgress,

@@ -1,10 +1,17 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户" prop="memberName">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
+      <el-form-item label="用户" prop="userName">
         <el-input
-          v-model="queryParams.memberName"
-          placeholder="请输入用户昵称"
+          v-model="queryParams.userName"
+          placeholder="请输入用户昵称或手机号"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -17,45 +24,34 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="对话时间">
+        <el-date-picker
+          v-model="dateRange"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['gpt:chat:save']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['gpt:chat:update']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
         <el-button
           type="danger"
           plain
           icon="el-icon-delete"
-          size="mini" 
+          size="mini"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['gpt:chat:remove']"
         >删除</el-button>
-      </el-col>
+      </el-form-item>
+    </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5"></el-col>
       <!-- <el-col :span="1.5">
         <el-button
           type="warning"
@@ -65,24 +61,36 @@
           @click="handleExport"
           v-hasPermi="['gpt:chat:export']"
         >导出</el-button>
-      </el-col> -->
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      </el-col>-->
+      <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
 
     <el-table v-loading="loading" :data="chatList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="用户" align="center" prop="userName" />
-      <el-table-column label="聊天摘要" align="center" prop="title">
+      <el-table-column label="主键" align="center" prop="id" width="120" />
+      <el-table-column label="用户" align="center" prop="userName" width="200" />
+      <el-table-column label="聊天助手" align="center" prop="title" width="220">
+        <template slot-scope="scope">{{ scope.row.assistantTitle ? scope.row.assistantTitle : '主动对话' }}</template>
+      </el-table-column>
+      <el-table-column label="聊天摘要" align="center" prop="title" width="500">
         <template slot-scope="scope">
-          <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top">
-            <div class="table-cell"> {{ scope.row.title }} </div>
-          </el-tooltip>
+          <el-link type="primary" :underline="false" @click="handleDetail(scope.row)">
+            <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top">
+              <div class="table-cell">{{ scope.row.title }}</div>
+            </el-tooltip>
+          </el-link>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleDetail(scope.row)"
+            v-hasPermi="['gpt:chat:remove']"
+          >对话详情</el-button>
           <el-button
             size="mini"
             type="text"
@@ -93,7 +101,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -121,16 +129,16 @@
 </template>
 
 <script>
-  import {
-    pageChat,
-    listChat,
-    getChat,
-    addChat,
-    updateChat,
-    delChat,
-  } from "@/api/gpt/chat";
+import {
+  pageChat,
+  listChat,
+  getChat,
+  addChat,
+  updateChat,
+  delChat
+} from "@/api/gpt/chat";
 
-  export default {
+export default {
   name: "Chat",
   data() {
     return {
@@ -152,11 +160,12 @@
       title: "",
       // 是否显示弹出层
       open: false,
+      dateRange: [],
       // 查询参数
       queryParams: {
         current: 1,
         size: 10,
-        memberId: null,
+        userName: null,
         title: null
       },
       // 表单参数
@@ -174,10 +183,7 @@
         ],
         updateTime: [
           { required: true, message: "更新时间不能为空", trigger: "blur" }
-        ],
-        memberId: [
-          { required: true, message: "用户id不能为空", trigger: "blur" }
-        ],
+        ]
       }
     };
   },
@@ -188,11 +194,13 @@
     /** 查询聊天摘要列表 */
     getList() {
       this.loading = true;
-      pageChat(this.queryParams).then(res => {
-        this.chatList = res.data.records;
-        this.total = res.data.total;
-        this.loading = false;
-      });
+      pageChat(this.addDateRange(this.queryParams, this.dateRange)).then(
+        res => {
+          this.chatList = res.data.records;
+          this.total = res.data.total;
+          this.loading = false;
+        }
+      );
     },
     // 取消按钮
     cancel() {
@@ -220,65 +228,42 @@
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm("queryForm");
+      this.dateRange = [];
       this.handleQuery();
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map(item => item.id);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加聊天摘要";
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getChat(id).then(res => {
-        this.form = res.data;
-        this.open = true;
-        this.title = "修改聊天摘要";
-      });
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateChat(this.form).then(res => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addChat(this.form).then(res => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
+    /** 查看详情操作 */
+    handleDetail(row) {
+      this.$router.push("/chat/chat-message?chatId=" + row.id);
     },
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除聊天摘要编号为"' + ids + '"的数据项？').then(function() {
-        return delChat(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除聊天摘要编号为"' + ids + '"的数据项？')
+        .then(function() {
+          return delChat(ids);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('/gpt/chat/export', {
-        ...this.queryParams
-      }, `chat_${new Date().getTime()}.xlsx`)
+      this.download(
+        "/gpt/chat/export",
+        {
+          ...this.queryParams
+        },
+        `chat_${new Date().getTime()}.xlsx`
+      );
     }
   }
 };

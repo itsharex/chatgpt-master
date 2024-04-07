@@ -6,22 +6,12 @@
       size="small"
       :inline="true"
       v-show="showSearch"
-      label-width="130px"
+      label-width="68px"
     >
-      <el-form-item label="语言模型" prop="model">
-        <el-select v-model="queryParams.model" clearable  placeholder="请选择语言模型">
-          <el-option
-            v-for="item in dict.type.gpt_model_type"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="应用Key(token)" prop="appKey">
+      <el-form-item label="模型名称" prop="name">
         <el-input
-          v-model="queryParams.appKey"
-          placeholder="请输入appKey"
+          v-model="queryParams.name"
+          placeholder="请输入模型名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -40,7 +30,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['gpt:openkey:save']"
+          v-hasPermi="['gpt:model:save']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -51,7 +41,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['gpt:openkey:update']"
+          v-hasPermi="['gpt:model:update']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -62,31 +52,28 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['gpt:openkey:remove']"
+          v-hasPermi="['gpt:model:remove']"
         >删除</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="openkeyList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="modelList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" width="100"/>
+      <el-table-column label="主键" align="center" prop="id" />
+      <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="模型" align="center" prop="model" width="150">
         <template slot-scope="scope">
           <dictTag :options="dict.type.gpt_model_type" :value="scope.row.model"></dictTag>
         </template>
       </el-table-column>
-      <el-table-column label="应用Id" align="center" prop="appId" width="150"/>
-      <el-table-column label="应用Key(token)" align="center" prop="appKey" width="220" />
-      <el-table-column label="总额度" align="center" prop="totalTokens" />
-      <el-table-column label="剩余额度" align="center" prop="surplusTokens" />
+      <el-table-column label="普会版本" align="center" prop="version" />
+      <el-table-column label="超会版本" align="center" prop="plusVersion" />
       <el-table-column label="是否可用" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -94,54 +81,46 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['gpt:openkey}:update']"
+            v-hasPermi="['gpt:model:update']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['gpt:openkey:remove']"
+            v-hasPermi="['gpt:model:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total > 0"
+      v-show="total>0"
       :total="total"
       :page.sync="queryParams.current"
       :limit.sync="queryParams.size"
       @pagination="getList"
     />
 
-    <!-- 添加或修改openai token对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="550px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+    <!-- 添加或修改大模型信息对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <!-- <el-form-item label="icon" prop="icon">
+          <el-input v-model="form.icon" placeholder="请输入模型图标(暂未使用)" />
+        </el-form-item> -->
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入模型名称" />
+        </el-form-item>
         <el-form-item label="模型" prop="model">
-          <el-select v-model="form.model" placeholder="请选择AI模型">
-            <el-option
-              v-for="item in dict.type.gpt_model_type"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
+          <el-select v-model="form.model" placeholder="请选择模型">
+            <el-option v-for="item in dict.type.gpt_model_type" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="form.model == 'WENXIN' || form.model == 'SPARK' " label="应用id" prop="appId">
-          <el-input v-model="form.appId" placeholder="请输入appId" />
+        <el-form-item label="普会版本" prop="version">
+          <el-input v-model="form.version" placeholder="请输入普通会员模型版本" />
         </el-form-item>
-        <el-form-item label="应用key(token)" prop="appKey">
-          <el-input v-model="form.appKey" placeholder="请输入appkey" />
-        </el-form-item>
-        <el-form-item v-if="form.model != 'CHAT_GPT' && form.model != 'QIANWEN' " label="应用Secret" prop="appSecret">
-          <el-input v-model="form.appSecret" placeholder="请输入appSecret" />
-        </el-form-item>
-        <el-form-item label="总额度" prop="totalTokens">
-          <el-input v-model="form.totalTokens" placeholder="请输入总额度" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注" />
+        <el-form-item label="超会版本" prop="plusVersion">
+          <el-input v-model="form.plusVersion" placeholder="请输入超级会员模型版本" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-switch v-model="form.status" :active-value="1" :inactive-value="0"></el-switch>
@@ -157,15 +136,16 @@
 
 <script>
 import {
-  pageOpenkey,
-  getOpenkey,
-  addOpenkey,
-  updateOpenkey,
-  delOpenkey
-} from "@/api/gpt/openkey";
+  pageModel,
+  listModel,
+  getModel,
+  addModel,
+  updateModel,
+  delModel
+} from "@/api/gpt/model";
 
 export default {
-  name: "Openkey",
+  name: "Model",
   dicts: ["sys_normal_disable", "gpt_model_type"],
   data() {
     return {
@@ -181,26 +161,44 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // openai token表格数据
-      openkeyList: [],
+      // 大模型信息表格数据
+      modelList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      // 日期范围
+      dateRange: [],
       // 查询参数
       queryParams: {
         current: 1,
         size: 10,
-        appKey: null
+        name: null,
+        status: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        model: [{ required: true, message: "模型不能为空", trigger: "blur" }],
-        appId: [{ required: true, message: "应用Id不能为空", trigger: "blur" }],
-        appKey: [{ required: true, message: "应用Key不能为空", trigger: "blur" }],
-        appSecret: [{ required: true, message: "应用Secret不能为空", trigger: "blur" }],
+        name: [
+          { required: true, message: "模型名称不能为空", trigger: "blur" }
+        ],
+        icon: [
+          { required: true, message: "模型logo不能为空", trigger: "blur" }
+        ],
+        model: [
+          { required: true, message: "模型名称不能为空", trigger: "blur" }
+        ],
+        version: [
+          { required: true, message: "模型版本不能为空", trigger: "blur" }
+        ],
+        status: [
+          {
+            required: true,
+            message: "状态 0 禁用 1 启用不能为空",
+            trigger: "blur"
+          }
+        ]
       }
     };
   },
@@ -208,14 +206,16 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询openai token列表 */
+    /** 查询大模型信息列表 */
     getList() {
       this.loading = true;
-      pageOpenkey(this.queryParams).then(res => {
-        this.openkeyList = res.data.records;
-        this.total = res.data.total;
-        this.loading = false;
-      });
+      pageModel(this.addDateRange(this.queryParams, this.dateRange)).then(
+        res => {
+          this.modelList = res.data.records;
+          this.total = res.data.total;
+          this.loading = false;
+        }
+      );
     },
     // 取消按钮
     cancel() {
@@ -226,13 +226,11 @@ export default {
     reset() {
       this.form = {
         id: null,
+        name: null,
+        icon: null,
         model: null,
-        appId: null,
-        appKey: null,
-        appSecret: null,
-        totalTokens: null,
-        remark: null,
-        status: 0,
+        version: null,
+        status: 0
       };
       this.resetForm("form");
     },
@@ -256,16 +254,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加密钥";
+      this.title = "添加大模型信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids;
-      getOpenkey(id).then(res => {
+      getModel(id).then(res => {
         this.form = res.data;
         this.open = true;
-        this.title = "修改密钥";
+        this.title = "修改大模型信息";
       });
     },
     /** 提交按钮 */
@@ -273,13 +271,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateOpenkey(this.form).then(res => {
+            updateModel(this.form).then(res => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addOpenkey(this.form).then(res => {
+            addModel(this.form).then(res => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -292,9 +290,9 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$modal
-        .confirm('是否确认删除openai token编号为"' + ids + '"的数据项？')
+        .confirm('是否确认删除大模型信息编号为"' + ids + '"的数据项？')
         .then(function() {
-          return delOpenkey(ids);
+          return delModel(ids);
         })
         .then(() => {
           this.getList();
@@ -305,11 +303,11 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        "/gpt/openkey/export",
+        "/demo/model/export",
         {
           ...this.queryParams
         },
-        `openkey_${new Date().getTime()}.xlsx`
+        `model_${new Date().getTime()}.xlsx`
       );
     }
   }

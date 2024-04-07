@@ -191,7 +191,7 @@ export default {
       let strs = "";
       separator = separator || ",";
       for (let i in list) {
-        strs += list[i].url.replace(this.baseUrl, "") + separator;
+        strs += list[i].url + separator;
       }
       return strs != '' ? strs.substr(0, strs.length - 1) : '';
     }

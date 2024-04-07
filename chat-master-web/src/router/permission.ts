@@ -11,6 +11,10 @@ export function setupPageGuard(router: Router) {
       next();
       return;
     }
+    if (to.path == '/agreement') {
+      next();
+      return;
+    }
     try {
       const res = await authStore.getSession();
       chatStore.setActive('');

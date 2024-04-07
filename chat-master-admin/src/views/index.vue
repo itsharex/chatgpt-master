@@ -42,7 +42,7 @@
             <div style="margin: 14px 40px;">
               <div style="display: flex; align-items:center">欢迎使用 chat-master开源大模型系统！开源地址：<el-link href="https://gitee.com/panday94/chat-master" type="primary" target="_blank">传送门</el-link></div>
               <div>个人能力有限，诚邀志同道合的伙伴一起加入开发chat-master-plus。如有需求可查看readme添加作者微信！</div>
-              <div><span style="color:darkgreen;">TODO：</span>移动端、知识库、绘画、WebScoket响应等</div>
+              <div><span style="color:darkgreen;"></span>移动端体验：<el-link href="https://gpt.panday94.xyz" type="primary" target="_blank">传送门</el-link></div>
             </div>
             <el-row :gutter="20">
               <el-col :sm="24" :lg="24">

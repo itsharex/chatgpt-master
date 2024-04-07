@@ -23,6 +23,11 @@ export const useAppStore = defineStore('app-store', {
       }
     },
 
+    setBaseInfo(baseInfo: any) {
+      this.baseInfo = baseInfo;
+      this.recordState()
+    },
+
     recordState() {
       setLocalSetting(this.$state)
     },
