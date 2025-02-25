@@ -16,6 +16,7 @@ import com.master.chat.llm.base.entity.ChatData;
 import com.master.chat.llm.base.exception.LLMException;
 import com.master.chat.llm.base.service.impl.*;
 import com.master.chat.llm.chatglm.ChatGLMClient;
+import com.master.chat.llm.doubao.DouBaoClient;
 import com.master.chat.llm.internlm.InternlmClient;
 import com.master.chat.llm.locallm.coze.CozeClient;
 import com.master.chat.llm.locallm.gitee.GiteeClient;
@@ -58,6 +59,7 @@ public class LLMService {
     private static TongYiClient tongYiClient;
     private static SparkClient sparkClient;
     private static MoonshotClient moonshotClient;
+    private static DouBaoClient douBaoClient;
     private static InternlmClient internlmClient;
     private static LangchainClient langchainClient;
     private static OllamaClient ollamaClient;
@@ -77,6 +79,7 @@ public class LLMService {
         LLMService.tongYiClient = tongYiClient;
         LLMService.sparkClient = sparkClient;
         LLMService.moonshotClient = moonshotClient;
+        LLMService.douBaoClient = douBaoClient;
         LLMService.internlmClient = internlmClient;
         LLMService.langchainClient = langchainClient;
         LLMService.ollamaClient = ollamaClient;
@@ -153,6 +156,8 @@ public class LLMService {
                 return new InternLMServiceImpl(internlmClient);
             case MOONSHOT:
                 return new MoonshotServiceImpl(moonshotClient);
+            case DOUBAO:
+                return new DouBaoServiceImpl(douBaoClient);
             case LOCALLM:
                 return new LocalLMServiceImpl(langchainClient, ollamaClient, cozeClient, gptService,giteeClient);
             default:
