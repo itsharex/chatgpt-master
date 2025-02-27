@@ -99,7 +99,7 @@
                 and DATE_FORMAT(t.create_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{q.endDate}, '%Y-%m-%d')
             </if>
         </where>
-        group by t.id order by t.id desc
+        order by t.id desc
     </sql>
 
     <update id="updateLoginTime">
