@@ -1,9 +1,10 @@
 package com.master.chat.llm.locallm;
 
 import cn.hutool.http.ContentType;
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.master.chat.common.constant.AuthConstant;
-import com.master.chat.framework.validator.ValidatorUtil;
 import com.master.chat.llm.base.exception.LLMException;
 import com.master.chat.llm.locallm.base.BaseChatCompletion;
 import com.master.chat.llm.locallm.interceptor.LocalLMInterceptor;
@@ -19,7 +20,7 @@ import okhttp3.sse.EventSourceListener;
 import okhttp3.sse.EventSources;
 
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -72,9 +73,9 @@ public class LocalLMClient {
     /**
      * 流式响应 langchain使用
      *
-     * @param messages
+     * @param
      * @param eventSourceListener
-     * @param model
+     * @param
      */
     public void streamChat(BaseChatCompletion chat, EventSourceListener eventSourceListener, String domain, String url) {
         if (Objects.isNull(eventSourceListener)) {
@@ -94,11 +95,42 @@ public class LocalLMClient {
     }
 
     /**
+     * 流式响应Gitee模式方舟 使用
+     */
+    public Response streamChat(BaseChatCompletion chat, String domain) {
+        chat.setStream(true);
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            /**
+             * {"top_p":0.7,"frequency_penalty":0,"stream":true,"max_tokens":10240,"temperature":0.6,"messages":[{"role":"user","content":"你是谁？"}],"model":"DeepSeek-R1-Distill-Qwen-32B","extra_body":{"top_k":50}}
+             */
+            String jsonBody = objectMapper.writeValueAsString(chat);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonBody);
+
+            // 构建请求
+            Request request = new Request.Builder()
+                    .url(domain)
+                    .post(body)  // 使用统一的 body
+                    .addHeader("Authorization", "Bearer " + apiKey)
+                    .addHeader("X-Failover-Enabled", "true")
+                    .addHeader("Accept", "text/event-stream")
+                    .build();
+
+            // 执行请求
+            return okHttpClient.newCall(request).execute();
+        } catch (Exception e) {
+            log.error("Stream chat request failed: ", e);
+            return null;
+        }
+    }
+
+
+    /**
      * 流式响应 ollama/coze 使用
      *
-     * @param messages
-     * @param eventSourceListener
-     * @param model
+     * @param
+     * @param
+     * @param
      */
     public Response streamChat(BaseChatCompletion chat, String domain, String url) {
         chat.setStream(true);
