@@ -6,6 +6,7 @@ import com.master.chat.llm.spark.entity.request.ChatRequest;
 import com.master.chat.llm.spark.entity.response.ChatSyncResponse;
 import com.master.chat.llm.spark.enums.ModelEnum;
 import com.master.chat.llm.spark.listener.SyncListener;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -30,6 +31,7 @@ import java.util.*;
  * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Slf4j
+@Data
 public class SparkClient {
     public String appid;
     public String apiKey;
