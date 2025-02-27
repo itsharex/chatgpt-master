@@ -134,8 +134,6 @@ public class ChatController extends BaseAppController {
 
     /**
      * 创建sse连接
-     *
-     * @param headers
      * @return
      */
     @GetMapping("/sse/create")
@@ -145,8 +143,6 @@ public class ChatController extends BaseAppController {
 
     /**
      * 关闭连接
-     *
-     * @param headers
      */
     @GetMapping("/sse/close")
     public void closeConnect(@RequestHeader(name = "uid") String uid) {
