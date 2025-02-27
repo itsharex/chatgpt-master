@@ -58,7 +58,7 @@
 
     <sql id="selectSysUser">
         select t.*,
-        t2.`name` as deptName
+        MAX(t2.`name`) as deptName
         from sys_user t
         left join sys_user_dept t1 on t.id = t1.sys_user_id
         left join sys_dept t2 on t1.dept_id = t2.id
