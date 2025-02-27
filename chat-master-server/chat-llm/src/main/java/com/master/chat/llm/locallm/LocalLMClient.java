@@ -1,8 +1,6 @@
 package com.master.chat.llm.locallm;
 
 import cn.hutool.http.ContentType;
-import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.master.chat.common.constant.AuthConstant;
 import com.master.chat.llm.base.exception.LLMException;
@@ -20,7 +18,7 @@ import okhttp3.sse.EventSourceListener;
 import okhttp3.sse.EventSources;
 
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -71,7 +69,8 @@ public class LocalLMClient {
     }
 
     /**
-     * 流式响应 langchain使用
+     * langchain使用
+     * 流式响应
      *
      * @param
      * @param eventSourceListener
@@ -95,9 +94,10 @@ public class LocalLMClient {
     }
 
     /**
-     * 流式响应Gitee模式方舟 使用
+     * Gitee模式方舟 使用
+     * 流式响应
      */
-    public Response streamChat(BaseChatCompletion chat, String domain) {
+    public Response streamChat(BaseChatCompletion chat, String url) {
         chat.setStream(true);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -109,8 +109,8 @@ public class LocalLMClient {
 
             // 构建请求
             Request request = new Request.Builder()
-                    .url(domain)
-                    .post(body)  // 使用统一的 body
+                    .url(url)
+                    .post(body)
                     .addHeader("Authorization", "Bearer " + apiKey)
                     .addHeader("X-Failover-Enabled", "true")
                     .addHeader("Accept", "text/event-stream")
@@ -126,7 +126,8 @@ public class LocalLMClient {
 
 
     /**
-     * 流式响应 ollama/coze 使用
+     * ollama/coze 使用
+     * 流式响应
      *
      * @param
      * @param
