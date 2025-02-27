@@ -16,9 +16,11 @@ import com.master.chat.llm.base.entity.ChatData;
 import com.master.chat.llm.base.exception.LLMException;
 import com.master.chat.llm.base.service.impl.*;
 import com.master.chat.llm.chatglm.ChatGLMClient;
+import com.master.chat.llm.deepseek.DeepSeekStreamClient;
 import com.master.chat.llm.doubao.DouBaoClient;
 import com.master.chat.llm.internlm.InternlmClient;
 import com.master.chat.llm.locallm.coze.CozeClient;
+import com.master.chat.llm.locallm.gitee.GiteeClient;
 import com.master.chat.llm.locallm.langchain.LangchainClient;
 import com.master.chat.llm.locallm.ollama.OllamaClient;
 import com.master.chat.llm.moonshot.MoonshotClient;
@@ -58,17 +60,19 @@ public class LLMService {
     private static TongYiClient tongYiClient;
     private static SparkClient sparkClient;
     private static MoonshotClient moonshotClient;
+    private static DeepSeekStreamClient deepSeekStreamClient;
     private static DouBaoClient douBaoClient;
     private static InternlmClient internlmClient;
     private static LangchainClient langchainClient;
     private static OllamaClient ollamaClient;
     private static CozeClient cozeClient;
     private final GptService gptService;
+    private static GiteeClient giteeClient;
 
     @Autowired
     public LLMService(GptService gptService, OpenAiClient openAiClient, OpenAiStreamClient openAiStreamClient, WenXinClient wenXinClient,
-                      ChatGLMClient chatGLMClient, TongYiClient tongYiClient, SparkClient sparkClient, MoonshotClient moonshotClient, DouBaoClient douBaoClient,
-                      InternlmClient internlmClient, LangchainClient langchainClient, OllamaClient ollamaClient, CozeClient cozeClient) {
+                      ChatGLMClient chatGLMClient, TongYiClient tongYiClient, SparkClient sparkClient, MoonshotClient moonshotClient, DeepSeekStreamClient deepSeekStreamClient,
+                      InternlmClient internlmClient, LangchainClient langchainClient, OllamaClient ollamaClient, CozeClient cozeClient, GiteeClient giteeClient) {
         this.gptService = gptService;
         LLMService.openAiClient = openAiClient;
         LLMService.openAiStreamClient = openAiStreamClient;
@@ -77,11 +81,13 @@ public class LLMService {
         LLMService.tongYiClient = tongYiClient;
         LLMService.sparkClient = sparkClient;
         LLMService.moonshotClient = moonshotClient;
+        LLMService.deepSeekStreamClient = deepSeekStreamClient;
         LLMService.douBaoClient = douBaoClient;
         LLMService.internlmClient = internlmClient;
         LLMService.langchainClient = langchainClient;
         LLMService.ollamaClient = ollamaClient;
         LLMService.cozeClient = cozeClient;
+        LLMService.giteeClient = giteeClient;
     }
 
     public SseEmitter createSse(String uid) {
@@ -153,10 +159,12 @@ public class LLMService {
                 return new InternLMServiceImpl(internlmClient);
             case MOONSHOT:
                 return new MoonshotServiceImpl(moonshotClient);
+            case DEEPSEEK:
+                return new DeepSeekServiceImpl(deepSeekStreamClient);
             case DOUBAO:
                 return new DouBaoServiceImpl(douBaoClient);
             case LOCALLM:
-                return new LocalLMServiceImpl(langchainClient, ollamaClient, cozeClient, gptService);
+                return new LocalLMServiceImpl(langchainClient, ollamaClient, cozeClient, gptService,giteeClient);
             default:
                 return null;
         }

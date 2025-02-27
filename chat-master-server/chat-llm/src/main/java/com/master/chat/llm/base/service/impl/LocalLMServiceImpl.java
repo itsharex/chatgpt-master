@@ -9,6 +9,7 @@ import com.master.chat.common.exception.BusinessException;
 import com.master.chat.llm.base.service.ModelService;
 import com.master.chat.llm.locallm.coze.CozeClient;
 import com.master.chat.llm.locallm.enums.ModelTypeEnum;
+import com.master.chat.llm.locallm.gitee.GiteeClient;
 import com.master.chat.llm.locallm.langchain.LangchainClient;
 import com.master.chat.llm.locallm.ollama.OllamaClient;
 import lombok.SneakyThrows;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -34,13 +36,15 @@ public class LocalLMServiceImpl implements ModelService {
     private static OllamaClient ollamaClient;
     private static CozeClient cozeClient;
     private static GptService gptService;
+    private static GiteeClient giteeClient;
 
     @Autowired
-    public LocalLMServiceImpl(LangchainClient langchainClient, OllamaClient ollamaClient, CozeClient cozeClient, GptService gptService) {
+    public LocalLMServiceImpl(LangchainClient langchainClient, OllamaClient ollamaClient, CozeClient cozeClient, GptService gptService,GiteeClient giteeClient) {
         LocalLMServiceImpl.langchainClient = langchainClient;
         LocalLMServiceImpl.ollamaClient = ollamaClient;
         LocalLMServiceImpl.cozeClient = cozeClient;
         LocalLMServiceImpl.gptService = gptService;
+        LocalLMServiceImpl.giteeClient = giteeClient;
     }
 
     @Override
@@ -61,6 +65,8 @@ public class LocalLMServiceImpl implements ModelService {
                 return ollamaClient.buildChatCompletion(response, sseEmitter, chatId, conversationId, isWs, uid, chatMessages, prompt, version, modelDTO);
             case COZE:
                 return cozeClient.buildChatCompletion(response, sseEmitter, chatId, conversationId, isWs, uid, chatMessages, prompt, version, modelDTO);
+            case GITEE_AI:
+                return giteeClient.buildChatCompletion(response, sseEmitter, chatId, conversationId, isWs, uid, chatMessages, prompt, version, modelDTO);
             default:
                 throw new BusinessException("未知的模型类型，功能未接入");
         }

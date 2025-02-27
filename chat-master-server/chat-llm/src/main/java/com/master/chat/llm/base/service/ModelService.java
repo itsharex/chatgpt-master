@@ -31,7 +31,7 @@ public interface ModelService {
     /**
      * 流式响应
      *
-     * @return
+     * @return true 响应异常 false 响应正常
      */
     Boolean streamChat(HttpServletResponse response, SseEmitter sseEmitter, List<ChatMessageDTO> chatMessages, Boolean isWs, Boolean isDraw,
                        Long chatId, String conversationId, String prompt, String version, String uid);
