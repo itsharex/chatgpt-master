@@ -1,3 +1,14 @@
+## v1.2.0
+
+`2025-02-27`
+
+> [chat-master](https://gitee.com/panday94/chat-master)
+
+## Enhancement
+
+- 支持Gitee在线接口
+- 支持DeepSeek官方接口
+
 ## v1.1.9
 
 `2025-02-08`

@@ -28,7 +28,7 @@ public enum ResponseEnum {
     REQUEST_METHOD_ERROR(407, "啊哟，请求方式错了哦，请确认API请求方式GET/POST/PUT/DELETE"),
     CONNECT_TIME_OUT(408, "连接超时啦，请稍后再试哦"),
     TOO_MANY_REQUESTS(429, "请求未受理，请降低频率后重试"),
-    ERROR(500, "系统更新中，预计5分钟，若有问题请联系技术部"),
+    ERROR(500, "服务器繁忙，请稍后再试。"),
     BUSINESS_ERROR(600, "业务出错，请联系客服"),
     SYSTEM_WARNING(601, "系统预警，请及时处理"),
 

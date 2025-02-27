@@ -8,7 +8,13 @@ import com.master.chat.client.enums.ChatStatusEnum;
 import com.master.chat.client.model.command.ChatMessageCommand;
 import com.master.chat.client.service.GptService;
 import com.master.chat.framework.util.ApplicationContextUtil;
+import com.master.chat.framework.validator.ValidatorUtil;
+import com.master.chat.llm.base.entity.ChatData;
+import com.master.chat.llm.base.websocket.WebsocketServer;
+import com.master.chat.llm.base.websocket.constant.FunctionCodeConstant;
+import com.master.chat.llm.base.websocket.entity.WebSocketData;
 import com.master.chat.llm.locallm.gitee.resp.ChatCompletionResponse;
+import com.master.chat.llm.locallm.gitee.resp.Choice;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
@@ -94,7 +100,7 @@ public class SSEListener extends EventSourceListener {
                         completeLatch();
                         break;
                     }
-                    long sleepTime = Math.min(idleTimeoutMs-timeElapsed,idleTimeoutMs/2);
+                    long sleepTime = Math.min(idleTimeoutMs - timeElapsed, idleTimeoutMs / 2);
                     if (sleepTime > 0) {
                         TimeUnit.MILLISECONDS.sleep(sleepTime);
                     }
@@ -138,20 +144,18 @@ public class SSEListener extends EventSourceListener {
             // 解析并处理返回的数据
             ChatCompletionResponse chatResponse = JSON.parseObject(data, ChatCompletionResponse.class);
             this.conversationId = chatResponse.getId();
-            if (chatResponse != null && chatResponse.getChoices() != null) {
-                chatResponse.getChoices().forEach(choice -> {
-                    String content = choice.getDelta().getContent();
-                    if (content != null && !content.isEmpty()) {
-                        try {
-                            sendMessage(content);
-                            fullResponse.append(content);
-//                            log.info(content);
-                        } catch (IOException e) {
-                            log.error("消息写入失败，chatId: {}", chatId, e);
-                            handleError("Failed to write message");
-                        }
+            if (chatResponse != null && ValidatorUtil.isNotNullIncludeArray(chatResponse.getChoices())) {
+                Choice choice = chatResponse.getChoices().get(0);
+                String content = choice.getDelta().getContent();
+                if (content != null) {
+                    try {
+                        fullResponse.append(content);
+                        sendMessage(fullResponse.toString());
+                    } catch (IOException e) {
+                        log.error("消息写入失败，chatId: {}", chatId, e);
+                        handleError("Failed to write message");
                     }
-                });
+                }
             }
         } catch (Exception e) {
             log.error("SSE 事件处理失败，chatId: {}", chatId, e);
@@ -187,21 +191,16 @@ public class SSEListener extends EventSourceListener {
     }
 
     private void handleCompletion(EventSource eventSource) {
-        if (isCompleted) {
-            try {
-                log.info("SSE 流完成，chatId: {}, 响应长度: {}", chatId, fullResponse.length());
-                // 保存消息记录
-                saveChatMessage();
-                // 发送结束标识
-                sendMessage("[DONE]");
-                eventSource.cancel();
-                completeLatch();
-
-                log.info("SSE 处理完成，chatId: {}", chatId);
-            } catch (Exception e) {
-                log.error("处理完成时发生错误，chatId: {}", chatId, e);
-                handleError("Completion handling failed");
-            }
+        try {
+            log.info("SSE 流完成，chatId: {}, 响应长度: {}", chatId, fullResponse.length());
+            // 保存消息记录
+            saveChatMessage();
+            eventSource.cancel();
+            completeLatch();
+            log.info("SSE 处理完成，chatId: {}", chatId);
+        } catch (Exception e) {
+            log.error("处理完成时发生错误，chatId: {}", chatId, e);
+            handleError("Completion handling failed");
         }
     }
 
@@ -216,13 +215,16 @@ public class SSEListener extends EventSourceListener {
         }
     }
 
-    private void sendMessage(String message) throws IOException {
+    private void sendMessage(String text) throws IOException {
         try {
-            if (!isWs) {
-                response.getWriter().write("data: " + message + "\n\n");
-                response.getWriter().flush();
+            ChatData chatData = ChatData.builder().id(conversationId).conversationId(conversationId)
+                    .parentMessageId(parentMessageId)
+                    .role(ChatRoleEnum.ASSISTANT.getValue()).content(text).build();
+            if (isWs) {
+                WebSocketData wsData = WebSocketData.builder().functionCode(FunctionCodeConstant.MESSAGE).message(chatData).build();
+                WebsocketServer.sendMessageByUserId(uid, JSON.toJSONString(wsData));
             } else {
-                response.getWriter().write(message);
+                response.getWriter().write(ValidatorUtil.isNull(text) ? JSON.toJSONString(chatData) : "\n" + JSON.toJSONString(chatData));
                 response.getWriter().flush();
             }
         } catch (IOException e) {

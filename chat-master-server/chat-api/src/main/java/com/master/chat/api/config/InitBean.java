@@ -9,6 +9,8 @@ import com.master.chat.gpt.constant.BaseConfigConstant;
 import com.master.chat.gpt.mapper.OpenkeyMapper;
 import com.master.chat.gpt.pojo.vo.OpenkeyVO;
 import com.master.chat.llm.chatglm.ChatGLMClient;
+import com.master.chat.llm.deepseek.DeepSeekStreamClient;
+import com.master.chat.llm.deepseek.constant.DeepSeekConst;
 import com.master.chat.llm.doubao.DouBaoClient;
 import com.master.chat.llm.internlm.InternlmClient;
 import com.master.chat.llm.locallm.LocalLMClient;
@@ -241,6 +243,38 @@ public class InitBean {
     }
 
     /**
+     * DeepSeek
+     * @return
+     */
+    @Bean
+    public DeepSeekStreamClient deepSeekStreamClient() {
+        List<OpenkeyVO> openkeys = openkeyMapper.listOpenkeyByModel(ChatModelEnum.DEEPSEEK.getValue());
+        if (ValidatorUtil.isNullIncludeArray(openkeys)) {
+            log.error("未加载到DeepSeek模型token数据");
+            return new DeepSeekStreamClient();
+        }
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new OpenAILogger());
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient okHttpClient = new OkHttpClient
+                .Builder()
+                // 如使用代理 请更换为代理地址
+                //.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8080)))
+                .addInterceptor(httpLoggingInterceptor)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(600, TimeUnit.SECONDS)
+                .readTimeout(600, TimeUnit.SECONDS)
+                .build();
+        return DeepSeekStreamClient
+                .builder()
+                .apiHost(DeepSeekConst.HOST)
+                .apiKey(openkeys.stream().map(v -> v.getAppKey()).collect(Collectors.toList()))
+                //自定义key使用策略 默认随机策略
+                .keyStrategy(new KeyRandomStrategy())
+                .okHttpClient(okHttpClient)
+                .build();
+    }
+
+    /**
      * 豆包
      *
      * @return
@@ -280,7 +314,7 @@ public class InitBean {
 
     /**
      * LocalLM 本地模型
-     * 支持Langchain-Chatchat、Ollama、GiteeAI、扣子、FastGPT
+     * 支持Langchain-Chatchat、Ollama、GiteeAI、扣子、FastGPT、LinkAI、Dify
      *
      * @return
      */

@@ -5,9 +5,13 @@ package com.master.chat.llm.locallm.gitee.constant;
  */
 public interface ApiConstant {
 
-    // 默认走文本调用
-    String BASE_DOMAIN = "https://ai.gitee.com/v1/chat/completions";
+    /**
+     * 默认域名
+     */
+    String DEAFAULT_DOMAIN = "https://ai.gitee.com";
 
-    String DEFAULT_MODEL= "";
+    String CHAT = "/v1/chat/completions";
+
+    String DEFAULT_MODEL= "DeepSeek-R1-Distill-Qwen-32B";
 
 }

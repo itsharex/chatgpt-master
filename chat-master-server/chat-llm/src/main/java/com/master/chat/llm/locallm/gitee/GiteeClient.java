@@ -65,10 +65,7 @@ public class GiteeClient {
 
         try {
             ChatCompletion chat = buildChatRequest(chatMessages, modelDTO.getVersion());
-            String domain = ValidatorUtil.isNotNull(modelDTO.getModelUrl())
-                    ? modelDTO.getModelUrl()
-                    : ApiConstant.BASE_DOMAIN;
-
+            String domain = ValidatorUtil.isNotNull(modelDTO.getModelUrl()) ? modelDTO.getModelUrl() : ApiConstant.DEAFAULT_DOMAIN;
             return handleStreamResponse(
                     response,
                     chatId,
@@ -81,7 +78,7 @@ public class GiteeClient {
             );
         } catch (Exception e) {
             log.error("Error in buildChatCompletion: ", e);
-            return true; // 异常时返回true
+            return true;
         }
     }
 
@@ -113,7 +110,7 @@ public class GiteeClient {
             ChatCompletion chat,
             String domain) throws Exception {
 
-        Response callResponse = localLMClient.streamChat(chat, domain);
+        Response callResponse = localLMClient.streamChat(chat, domain + ApiConstant.CHAT);
         if (!isSuccessResponse(callResponse)) {
             return true; // 响应错误时返回true
         }
