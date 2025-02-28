@@ -72,7 +72,7 @@ public class LLMService {
     @Autowired
     public LLMService(GptService gptService, OpenAiClient openAiClient, OpenAiStreamClient openAiStreamClient, WenXinClient wenXinClient,
                       ChatGLMClient chatGLMClient, TongYiClient tongYiClient, SparkClient sparkClient, MoonshotClient moonshotClient, DeepSeekStreamClient deepSeekStreamClient,
-                      InternlmClient internlmClient, LangchainClient langchainClient, OllamaClient ollamaClient, CozeClient cozeClient, GiteeClient giteeClient) {
+                      DouBaoClient douBaoClient, InternlmClient internlmClient, LangchainClient langchainClient, OllamaClient ollamaClient, CozeClient cozeClient, GiteeClient giteeClient) {
         this.gptService = gptService;
         LLMService.openAiClient = openAiClient;
         LLMService.openAiStreamClient = openAiStreamClient;
