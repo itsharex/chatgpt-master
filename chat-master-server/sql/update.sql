@@ -35,3 +35,6 @@ INSERT INTO `sys_dict` (`create_user`, `create_time`, `update_user`, `update_tim
 # 2025-02-27 增加DeepSeek支持
 INSERT INTO `gpt_model` (`id`, `create_user`, `create_time`, `update_user`, `update_time`, `name`, `icon`, `model`, `local_model_type`, `model_url`, `knowledge`, `version`, `sort`, `status`, `deleted`) VALUES (10, 'System', '2025-02-27 10:34:02', 'System', '2025-02-27 10:34:21', 'DeepSeek', '', 'DeepSeek', 0, '', '', 'deepseek-chat', 0, 1, 0);
 INSERT INTO `gpt_openkey` (`id`, `create_user`, `create_time`, `update_user`, `update_time`, `model`, `app_id`, `app_key`, `app_secret`, `total_tokens`, `used_tokens`, `surplus_tokens`, `status`, `remark`, `deleted`) VALUES (10, 'System', '2025-02-27 10:34:36', 'System', '2025-02-27 10:44:43', 'DeepSeek', '', '', '', 100000, 0, 0, 1, '', 0);
+
+# 2025-03-02 将model表讯飞星火的默认version字段由`v1.1`更改为`lite`
+update gpt_model t set t.version = 'lite' where t.model = 'SPARK';

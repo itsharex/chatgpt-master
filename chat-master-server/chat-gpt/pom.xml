@@ -19,6 +19,11 @@
             <groupId>com.master.chat</groupId>
             <artifactId>chat-client</artifactId>
         </dependency>
+        <!-- llm模块  -->
+        <dependency>
+            <groupId>com.master.chat</groupId>
+            <artifactId>chat-llm</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

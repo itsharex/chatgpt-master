@@ -33,7 +33,7 @@ public class ChatRequestBuilder {
 
     public ChatRequest build() {
         ModelEnum apiVersion = chatRequest.getApiVersion();
-        chatRequest.getParameter().getChat().setDomain(apiVersion.getDomain());
+        chatRequest.getParameter().getChat().setDomain(apiVersion.getVersion());
         return chatRequest;
     }
 

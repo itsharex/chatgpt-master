@@ -1,3 +1,18 @@
+## v1.2.1
+
+`2025-03-02`
+
+> [chat-master](https://gitee.com/panday94/chat-master)
+
+## Enhancement
+
+- 自动更新API-key值，无需再重启服务
+- 将讯飞星火默认模型版本字段由v1.1改为lite
+- 完善开发文档，方便更多的用户快速上手。
+
+## BugFix
+- 解决豆包输出异常问题
+
 ## v1.2.0
 
 `2025-02-27`

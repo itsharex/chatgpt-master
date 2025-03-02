@@ -30,6 +30,7 @@ import com.master.chat.llm.openai.plugin.PluginAbstract;
 import com.master.chat.llm.openai.plugin.PluginParam;
 import io.reactivex.Single;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -53,6 +54,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DeepSeekStreamClient {
     @Getter
+    @Setter
     @NotNull
     private List<String> apiKey;
     /**
