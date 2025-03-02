@@ -1,6 +1,6 @@
-package com.master.chat.gpt.core.key.factory;
+package com.master.chat.llm.base.key.factory;
 
-import com.master.chat.gpt.core.key.updater.KeyUpdater;
+import com.master.chat.llm.base.key.updater.KeyUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,4 +55,5 @@ public class KeyUpdaterFactory {
     public List<String> getSupportedModels() {
         return (List<String>) keyUpdaterMap.keySet();
     }
+
 }

@@ -1,5 +1,6 @@
-package com.master.chat.gpt.core.key.updater;
+package com.master.chat.llm.base.key.updater;
 
+import com.master.chat.client.enums.ChatModelEnum;
 import com.master.chat.llm.spark.SparkClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ public class SparkKeyUpdater implements KeyUpdater {
     
     @Override
     public String supportModel() {
-        return "SPARK";
+        return ChatModelEnum.SPARK.getValue();
     }
     
     @Override

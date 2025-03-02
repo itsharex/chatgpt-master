@@ -1,7 +1,8 @@
-package com.master.chat.gpt.core.key.updater;
+package com.master.chat.llm.base.key.updater;
 
 // 1. 首先创建一个统一的密钥更新器接口
 public interface KeyUpdater {
+
     // 返回支持的模型类型
     String supportModel();
 

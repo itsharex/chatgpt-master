@@ -3,8 +3,8 @@ package com.master.chat.gpt.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.master.chat.gpt.core.key.factory.KeyUpdaterFactory;
-import com.master.chat.gpt.core.key.updater.KeyUpdater;
+import com.master.chat.llm.base.key.factory.KeyUpdaterFactory;
+import com.master.chat.llm.base.key.updater.KeyUpdater;
 import com.master.chat.gpt.mapper.OpenkeyMapper;
 import com.master.chat.gpt.pojo.command.OpenkeyCommand;
 import com.master.chat.gpt.pojo.entity.Openkey;
@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -108,13 +107,16 @@ public class OpenkeyServiceImpl extends ServiceImpl<OpenkeyMapper, Openkey> impl
         openkey.setUpdateUser(command.getOperater());
         openkey.setUpdateTime(LocalDateTime.now());
         openkeyMapper.updateById(openkey);
-
         // 修改内存中的key，解决无法马上生效问题
         updateKey(command.getModel(),command.getAppKey());
-
         return ResponseInfo.success();
     }
 
+    /**
+     * 更新模型密钥
+     * @param model
+     * @param key
+     */
     private void updateKey(String model,String key){
         KeyUpdater keyUpdater = keyUpdaterFactory.getKeyUpdater(model);
         keyUpdater.updateKey(key);
