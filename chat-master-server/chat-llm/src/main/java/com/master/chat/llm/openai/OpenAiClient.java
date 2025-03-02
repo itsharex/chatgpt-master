@@ -59,6 +59,7 @@ import com.master.chat.llm.openai.plugin.PluginAbstract;
 import com.master.chat.llm.openai.plugin.PluginParam;
 import com.master.chat.llm.openai.utils.SSEUtil;
 import io.reactivex.Single;
+import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -79,6 +80,7 @@ import java.util.concurrent.TimeUnit;
  * 描述： open ai 客户端
  */
 @Slf4j
+@Data
 public class OpenAiClient {
     /**
      * keys
